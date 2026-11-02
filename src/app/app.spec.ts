@@ -15,10 +15,13 @@ describe('App', () => {
     expect(app).toBeTruthy();
   });
 
-  it('should render title', async () => {
+  it('should render the assessment and both parts', async () => {
     const fixture = TestBed.createComponent(App);
+    fixture.detectChanges();
     await fixture.whenStable();
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('h1')?.textContent).toContain('Hello, digicore');
+    expect(compiled.querySelector('h1')?.textContent).toContain('Technical Assessment (FE)');
+    expect(compiled.querySelector('#part-a h2')?.textContent).toContain('Part A');
+    expect(compiled.querySelector('#part-b h2')?.textContent).toContain('Part B');
   });
 });
