@@ -5,18 +5,10 @@
   </header>
 
   <article>
-    <h1>Technical Assessment (FE)</h1>
-    <nav aria-label="Assessment sections">
-      <a href="#part-a">Part A: Banking Transaction UI</a>
-      <a href="#part-b">Part B: Multi-Bank UI Engine</a>
-    </nav>
-
     <section class="review" id="part-a">
-      <h2>Part A: Broken Banking Transaction UI</h2>
-      <p>You are given a simplified Angular component used in production. It has multiple bugs and performance issues.</p>
-      <h3>Question 1</h3>
+      <h5>Question 1</h5>
       <p>Identify all issues that could break or degrade production performance.</p>
-      <h3>Question 2</h3>
+      <h5>Question 1b</h5>
       <p>Rewrite or describe how you would fix:</p>
       <ol type="a">
         <li>State handling issue</li>
@@ -60,7 +52,7 @@ export class TransactionsComponent &#123;
     </section>
 
     <section class="review">
-      <h2>Part A — Question 1: Issues identified</h2>
+      <h3>Question 1: Issues identified</h3>
       <ul>
         <li><strong>Missing service injection:</strong> The <code>transactionService</code> is never injected into the component. Calling <code>getTransactions()</code> will fail because the component has no reference to the service.</li>
         <li><strong>Unsafe and case-sensitive search:</strong> <code>t.category.includes(value)</code> can throw if <code>category</code> is null or undefined. It is also case-sensitive, so searching for "food" will not match "Food". Normalize the values and handle missing categories.</li>
@@ -70,17 +62,15 @@ export class TransactionsComponent &#123;
         <li><strong>Template and user experience:</strong> The input has no accessible label, and the template provides no loading, error, or empty states. Amounts are not formatted as currency.</li>
       </ul>
 
-      <h2>Part A — Question 2: Recommended fixes</h2>
-      <h3>2a. State handling</h3>
+      <h3>Recommended fixes</h3>
+      <h3>a. State handling</h3>
       <p>Keep transactions and the search query as the source of truth, and derive the filtered results instead of storing a second array. Normalize search text and handle missing categories safely.</p>
-      <h3>2b. Subscription</h3>
+      <h3>b. Subscription</h3>
       <p>A one-time HttpClient request completes automatically. For a long-lived observable, use <code>takeUntilDestroyed()</code> or the async pipe. Handle request errors and show the loading state.</p>
-      <h3>2c. Performance</h3>
+      <h3>c. Performance</h3>
       <p>Track rows by a stable transaction ID. Filtering a modest list on each keystroke is usually fine; debounce or use pagination/server-side filtering if list size or measured performance calls for it.</p>
-      <h3>2d. Template</h3>
+      <h3>d. Template</h3>
       <p>Add an accessible search label and loading, error, and empty states. Import <code>NgFor</code> (or use <code>&#64;for</code> with a tracking key) and format amounts with Angular's currency pipe.</p>
-
-      <h3>Example implementation for Question 2</h3>
       <section class="code-card" aria-label="Example fixed transactions component">
         <div class="code-title">transactions.component.ts</div>
         <pre><code>import &#123; Component, DestroyRef, computed, inject, signal &#125; from '@angular/core';
